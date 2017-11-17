@@ -1,10 +1,7 @@
-/*(
-s.waitForBoot{fork{*/
-
-s.options.memSize = 81920;
-s.options.numAudioBusChannels =
 (
 p = ProxySpace.push(s);
+s.options.memSize = 81920;
+
 ~o0.ar(2);~o1.ar(2);~o2.ar(2);~o3.ar(2);~o4.ar(2);~o5.ar(2);~o6.ar(2);~o7.ar(2);~o8.ar(2);~o9.ar(2);
 ~out.ar(2);
 ~out.play;
@@ -13,7 +10,7 @@ p = ProxySpace.push(s);
 a = Document.current.dir;
 
 c = SoundFile.collectIntoBuffers(a++ "/samples/*");
-// 0.1.wait;
+
 //make sure all samples are mono
 c.do{|it ix|
 	if(it.numChannels==2, {
@@ -71,6 +68,7 @@ SynthDef(\mGrain, {
 
 SynthDef(\noise, {|out amp=0.2| Out.ar(out, PinkNoise.ar()*amp) }).add;
 SynthDef(\impulses, {|out type=0 rate=1 amp=1| var sig = Select.ar(type, [Impulse.ar(rate), Dust.ar(rate)] ); Out.ar(out, sig) });
+SynthDef(\drone1,  {|out pch=50 rate=0.06 dlo=0.97 dhi=1.1 mul=1| var freq= pch.midicps; Out.ar( out, DFM1.ar(SinOsc.ar([freq,freq*1.01]*mul,0,0.1), (freq*2)*mul, SinOsc.kr(rate).range(dlo, dhi),1,0,0.0003,0.5) )}).add;
 
 SynthDef(\pan2, {|in out pos=0 amp=1| Out.ar( out, Pan2.ar( In.ar(in), pos )*amp ) }).add;
 SynthDef(\stereo, {|in out del=0.015| Out.ar(out, [In.ar(in), DelayC.ar(In.ar(in), 0.2, del)] ) }).add;
@@ -79,7 +77,7 @@ SynthDef(\stereo, {|in out del=0.015| Out.ar(out, [In.ar(in), DelayC.ar(In.ar(in
 ~lfGaussRand1 =  {|rate=2 lo=0 hi=1| TGaussRand.kr( lo, hi, Dust.kr(rate) )}; ~lfSin1 =  { |rate=1 lo= -1 hi=1|  SinOsc.kr(rate).range(lo, hi)  }; ~lfSaw1 =  { |rate=1 lo= -1 hi=1|  LFSaw.kr(rate).range(lo, hi)  }; ~lfTri1 =  { |rate=1 lo= -1 hi=1|  LFTri.kr(rate).range(lo, hi)  }; ~lfNoise1 =  { |rate=1 lo= -1 hi=1|  LFNoise0.kr(rate).range(lo, hi)  }; ~lfTRand1 =  {|rate=2 lo=0 hi=1| TRand.kr( lo, hi, Dust.kr(rate) )};
 ~lfGaussRand2 =  {|rate=2 lo=0 hi=1| TGaussRand.kr( lo, hi, Dust.kr(rate) )}; ~lfSin2 =  { |rate=1 lo= -1 hi=1|  SinOsc.kr(rate).range(lo, hi)  }; ~lfSaw2 =  { |rate=1 lo= -1 hi=1|  LFSaw.kr(rate).range(lo, hi)  }; ~lfTri2 =  { |rate=1 lo= -1 hi=1|  LFTri.kr(rate).range(lo, hi)  }; ~lfNoise2 =  { |rate=1 lo= -1 hi=1|  LFNoise0.kr(rate).range(lo, hi)  }; ~lfTRand2 =  {|rate=2 lo=0 hi=1| TRand.kr( lo, hi, Dust.kr(rate) )};
 ~lfGaussRand3 =  {|rate=2 lo=0 hi=1| TGaussRand.kr( lo, hi, Dust.kr(rate) )}; ~lfSin3 =  { |rate=1 lo= -1 hi=1|  SinOsc.kr(rate).range(lo, hi)  }; ~lfSaw3 =  { |rate=1 lo= -1 hi=1|  LFSaw.kr(rate).range(lo, hi)  }; ~lfTri3 =  { |rate=1 lo= -1 hi=1|  LFTri.kr(rate).range(lo, hi)  }; ~lfNoise3 =  { |rate=1 lo= -1 hi=1|  LFNoise0.kr(rate).range(lo, hi)  }; ~lfTRand3 =  {|rate=2 lo=0 hi=1| TRand.kr( lo, hi, Dust.kr(rate) )};
- ~lfGaussRand4 =  {|rate=2 lo=0 hi=1| TGaussRand.kr( lo, hi, Dust.kr(rate) )}; ~lfSin4 =  { |rate=1 lo= -1 hi=1|  SinOsc.kr(rate).range(lo, hi)  }; ~lfSaw4 =  { |rate=1 lo= -1 hi=1|  LFSaw.kr(rate).range(lo, hi)  }; ~lfTri4 =  { |rate=1 lo= -1 hi=1|  LFTri.kr(rate).range(lo, hi)  }; ~lfNoise4 =  { |rate=1 lo= -1 hi=1|  LFNoise0.kr(rate).range(lo, hi)  }; ~lfTRand4=  {|rate=2 lo=0 hi=1| TRand.kr( lo, hi, Dust.kr(rate) )};
+~lfGaussRand4 =  {|rate=2 lo=0 hi=1| TGaussRand.kr( lo, hi, Dust.kr(rate) )}; ~lfSin4 =  { |rate=1 lo= -1 hi=1|  SinOsc.kr(rate).range(lo, hi)  }; ~lfSaw4 =  { |rate=1 lo= -1 hi=1|  LFSaw.kr(rate).range(lo, hi)  }; ~lfTri4 =  { |rate=1 lo= -1 hi=1|  LFTri.kr(rate).range(lo, hi)  }; ~lfNoise4 =  { |rate=1 lo= -1 hi=1|  LFNoise0.kr(rate).range(lo, hi)  }; ~lfTRand4=  {|rate=2 lo=0 hi=1| TRand.kr( lo, hi, Dust.kr(rate) )};
 ~lfGaussRand5 =  {|rate=2 lo=0 hi=1| TGaussRand.kr( lo, hi, Dust.kr(rate) )}; ~lfSin5 =  { |rate=1 lo= -1 hi=1|  SinOsc.kr(rate).range(lo, hi)  }; ~lfSaw5 =  { |rate=1 lo= -1 hi=1|  LFSaw.kr(rate).range(lo, hi)  }; ~lfTri5 =  { |rate=1 lo= -1 hi=1|  LFTri.kr(rate).range(lo, hi)  }; ~lfNoise5 =  { |rate=1 lo= -1 hi=1|  LFNoise0.kr(rate).range(lo, hi)  }; ~lfTRand5 =  {|rate=2 lo=0 hi=1| TRand.kr( lo, hi, Dust.kr(rate) )};
 
 ~lfExp = { |rate=1 lo=0.000000001 hi=1.0| LinExp.kr( LFSaw.kr(rate), -1, 1, lo, hi ) };
@@ -89,186 +87,48 @@ SynthDef(\stereo, {|in out del=0.015| Out.ar(out, [In.ar(in), DelayC.ar(In.ar(in
 ~lfExp4 = { |rate=1 lo=0.000000001 hi=1.0| LinExp.kr( LFSaw.kr(rate), -1, 1, lo, hi ) };
 ~lfExp5 = { |rate=1 lo=0.000000001 hi=1.0| LinExp.kr( LFSaw.kr(rate), -1, 1, lo, hi ) };
 
+~bowl = \playSamp; ~acc = \playSamp; ~muBox = \playSamp; ~saw = \playSamp; ~aeolian = \playSamp; ~bamboo = \playSamp; ~pans = \playSamp; ~glass = \playSamp; ~eGtr = \playSamp; ~post = \playSamp; ~sitar = \playSamp; ~squeek = \playSamp; ~rocks = \playSamp; ~type = \playSamp; ~match = \playSamp;
 
-~bowl = \playSamp; ~bowl.set(\buf, b[\bowl]);
-~acc = \playSamp; ~acc.set(\buf, b[\accl]);
-~muBox = \playSamp; ~muBox.set(\buf, b[\muBox]);
-~saw = \playSamp; ~saw.set(\buf, b[\saw]);
-~aeolian = \playSamp; ~aeolian.set(\buf, b[\aeolian]);
-~bamboo = \playSamp; ~bamboo.set(\buf, b[\bamboo]);
-~pans = \playSamp; ~pans.set(\buf, b[\pans]);
-~glass = \playSamp; ~glass.set(\buf, b[\glass]);
-~eGtr = \playSamp; ~eGtr.set(\buf, b[\eGtr]);
-~post = \playSamp; ~post.set(\buf, b[\post]);
-~sitar = \playSamp; ~sitar.set(\buf, b[\sitar]);
-~squeek = \playSamp; ~squeek.set(\buf, b[\squeek]);
-~rocks = \playSamp; ~rocks.set(\buf, b[\glass]);
-~type = \playSamp; ~type.set(\buf, b[\type]);
-~match = \playSamp; ~match.set(\buf, b[\match]);
+~bowl.set(\buf, b[\bowl]); ~acc.set(\buf, b[\accl]); ~muBox.set(\buf, b[\muBox]); ~saw.set(\buf, b[\saw]); ~aeolian.set(\buf, b[\aeolian]); ~bamboo.set(\buf, b[\bamboo]); ~pans.set(\buf, b[\pans]); ~glass.set(\buf, b[\glass]); ~eGtr.set(\buf, b[\eGtr]); ~post.set(\buf, b[\post]); ~sitar.set(\buf, b[\sitar]); ~squeek.set(\buf, b[\squeek]); ~rocks.set(\buf, b[\glass]); ~type.set(\buf, b[\type]); ~match.set(\buf, b[\match]);
+
+
 )
-/*}}
-)*/
+~o0 = ~type
 ~bowl = \playSamp; ~bowl.set(\buf, b[\bowl]);
-
-~o0.fadeTime= 1;
-
-~o0 = ~bowl;
-~o0 = ~acc;
-~o0 = ~muBox;
-~o0 = ~saw;
-~o0 = ~aeolian
-~o0 = ~bamboo
-~o0 = ~pans
-~o0=nil;
-
-~e1 = \env
-~e1.set(\in, ~muBox.bus.index);
-~o0 = ~e1
-~e1.clear;
+~bowl  ~muBox  ~saw  ~aeolian  ~bamboo  ~pans  ~glass  ~eGtr  ~post  ~sitar  ~squeek  ~rocks  ~type  ~match
 
 ~e1.set(\rate, 2.5, \atk, 0.03, \sus, 0.07, \rel, 0.05, \crv, 0,  \type, 0); //reg atk=0.03, sus=dur, rel=0.05, crv=0
 ~e1.set(\rate, 5.5, \atk, 0.01, \sus, 0, \rel, 0.1, \crv, -8,  \type, 0); //perc atk=0.01, sus=0, rel=dur, crv=-4
 ~e1.set(\rate, 3, \atk, 0.6, \sus, 0, \rel, 0.01, \crv, 10,  \type, 0); //backwards atk=dur, sus=0, rel=0.01, crv=10
-~muBox.set(\rate, -2)
-~acc.set(\rate, 1.5)
-~muBox.set(\rate, 3.5)
 
 ~fx1 = \gh
 ~fx1.set(\in, ~e1.bus.index);
-~o0 = ~fx1
 ~fx1.set(\del, 0.25, \dmp, 0.0, \sz, 0.7, \fb, 0.7);
-~fx1.clear;
 
 ~p1 = \pan2
-~p1.set(\in, ~fx1.bus.index);
 ~p1.set(\in, ~e1.bus.index);
-~o0 = ~p1
 ~p1.set(\pos, -1)
-~p1.set(\pos, 1)
-~p1.set(\pos, 0)
-
-
-~lfSin.set(\rate, 0.01, \lo, -5.5, \hi, 5.5);
-~lfSaw.set(\rate, 0.1, \lo, -1, \hi, -5);
-~lfGaussRand.set(\rate, 0.5, \lo, 0.4, \hi, 6);
-~glass.xmap(\rate, ~lfGaussRand);
-~muBox.xmap(\rate, ~lfGaussRand);
-~muBox.unmap(\rate);
-
-~lfSin.set(\rate, 0.2, \lo, -1, \hi, 1);
-~p1.map(\pos, ~lfSin);
-~p1.unmap(\pos);
-
-~lfExp.set(\rate, 0.3, \lo, 0.00001, \hi, 1);
-~e1.map(\amp, ~lfExp);
-~e1.unmap(\amp);
-~e1.set(\amp, 0.01);
 
 ~src2 = \icy
 ~src2.set(\buf, b[\muBox], \rate, 0.99, \pitchShift, 2);
-~o1 = ~src2
-
-~lfExp1.set(\rate, 0.05, \lo, 0.00001, \hi, 1);
-~src2.map(\amp, ~lfExp1);
-~src2.set(\amp, 0.2);
-~src2.unmap(\amp);
-~src2.free
-~p2 = \pan2
-~p2.set(\pos, 0);
-~p2.set(\in, ~src2.bus.index);
-~o1= ~p2
-~lfSin1.set(\rate, 0.05, \lo, -1, \hi, 1);
-~p2.map(\pos, ~lfSin1);
-
-~o0=nil
-
 
 ~rm = \rm
-~rm.set(\in, ~bowl.bus.index, \mix, 0.5, \inamp, 10, \amp, 0.5);
-~bowl.set(\rate, 0.4)
-~lfTRand1.set(\rate, 0.2, \lo, 0.2, \hi, 2);
-~bowl.map(\rate, ~lfTRand1);
-~bowl.unmap(\rate);
-~o4 = ~rm
-~o4 = nil
-~o1 = ~e1
-~o1.fadeTime = 3
-
-~rm.clear
-
-~lfSin2.set(\rate, 0.05, \lo, 0.1, \hi, 500);
-~rm2.map(\fb, ~lfSin2);
+~rm.set(\in, ~bowl.bus.index, \mix, 0.5, \inamp, 10, \amp, 0.5, \fb, 1);
 
 ~fx3 = \mGrain
 ~fx3.set(\in, ~acc.bus.index, \sr, 5000, \br, 12, \rez, 0.5, \gdur1, 0.1, \grdur2, 0.03, \grate1, 5, \grate2, 2, \s0, 0, \s1, 1);
-~acc.set(\rate, 7.2)
-~o1 = ~fx3
-~fx3.clear
-~lfSaw2.set(\rate, 0.03, \lo, 0.5, \hi, 20)
-~fx3.map(\grate1, ~lfSaw2);
 
-~fx4 = \gh
-~fx4.set(\in, ~fx3.bus.index);
-~o1 = ~fx4
-~o0 = nil
-~fx4.set(\del, 0.86, \dmp, 0.0, \sz, 0.5, \fb, 1);
-~fx4.clear;
-~lfSaw3.set(\rate, 0.09, \lo, 0.7, \hi, 0.2)
-~fx4.map(\del, ~lfSaw3);
-~fx4.unmap(\del)
-~fx4.set(\amp, 0.1);
-~lfExp2.set(\rate, 0.1, \lo, 0.0001, \hi, 0.1)
-~fx4.map(\amp, ~lfExp2);
-~lfTRand2.set(\rate, 0.2, \lo, 0.07, \hi, 0.5);
-~lfExp2.map(\rate, ~lfTRand2);
-~e2 = \env
-~e2.set(\
+~st1 = \stereo
+~st1.set(\in, ~bowl.bus.index)
 
-~rm2 = \rm
-~rm2.set(\in, ~fx3.bus.index, \mix, 0.5, \inamp, 10, \amp, 5, \fb, 1);
-~o1 = ~rm2
-~p3 = \pan2
+~d1 = \drone1
+~d1.set(\pch, 50, \mul, 1, \rate, 0.05, \dlo, 0.97, \dhi, 1.3)
 
-	~p2 = \pan2
-~p2.set(\in, ~rm2.bus.index);
-~o1= ~p2
-~lfSin2.set(\rate, 0.05, \lo, -1, \hi, 1);
-~p2.map(\pos, ~lfSin1);
-	~p2.clear
+~n1 = \noise;
+~n1.set(\amp, 0.2);
 
-~e2 = \env
-~e2.set(\in, ~saw.bus.index, \rate, 4.5, \atk, 0.01, \sus, 0.03, \rel, 0.01, \crv, 6,  \type, 0); //reg atk=0.03, sus=dur, rel=0.05, crv=0
-~e1.set(\rate, 5.5, \atk, 0.01, \sus, 0, \rel, 0.1, \crv, -8,  \type, 0); //perc atk=0.01, sus=0, rel=dur, crv=-4
-~e1.set(\rate, 3, \atk, 0.6, \sus, 0, \rel, 0.01, \crv, 10,  \type, 0); //backwards atk=dur, sus=0, rel=0.01, crv=10
-~o0 = ~e2
-	~sawSt = \stereo
-	~sawSt.set(\in, ~e2.bus.index)
-	~o0 = ~sawSt
-	~sawSt.clear
-~muBox.set(\rate, -2)
-~acc.set(\rate, 1.5)
-	~e2.set(\amp, 0.7)
+~i1 = \impulses;
+~i1.set(\type, 0, \rate, 2, \amp, 1);
 
-~p3 = \pan2
-~p3.set(\in, ~e2.bus.index);
-~o0= ~p3
-~lfSin2.set(\rate, 0.1, \lo, -1, \hi, 1);
-~p3.map(\pos, ~lfSin1);
-	~p3.clear
-
-	~o3 = ~bowl
-
-	~st1 = \stereo
-	~st1.set(\in, ~bowl.bus.index)
-	~o3 = ~st1
-	~bowl.set(\rate, 1.31)
-	~e2.set(\amp, 0.5)
-
-
-
-
-
-
-
-
-
+~lfSin.set(\rate, 0.01, \lo, -5.5, \hi, 5.5);
+~lfGaussRand ~lfSaw ~lfTri ~lfTRand ~lfExp ~lfNoise
